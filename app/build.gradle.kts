@@ -65,6 +65,7 @@ dependencies {
 	implementation("androidx.navigation:navigation-ui-ktx:$navVersion")
 	// Eski Android sürümleri için destek kütüphanesi
 	implementation("androidx.legacy:legacy-support-v4:1.0.0")
+	implementation(libs.androidx.fragment)
 
 	// Test bağımlılıkları
 	testImplementation("junit:junit:4.+")
