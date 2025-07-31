@@ -1,14 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="#D6D6D6"
     android:layout_height="match_parent"
     tools:context=".BasketFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Basket Fragment" />
+    <!-- Sepetteki ürünleri gösterecek RecyclerView -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/basketRecyclerView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:padding="8dp"
+        tools:listitem="@layout/item_basket_row"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/bottomSummaryLayout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
-</FrameLayout>
+    <!-- Alt kısım: toplam tutar + siparişi tamamla -->
+    <LinearLayout
+        android:id="@+id/bottomSummaryLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="#F0F0F0"
+        android:padding="16dp"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:weightSum="2">
+
+        <!-- Toplam fiyat -->
+        <TextView
+            android:id="@+id/totalPriceText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Toplam: ₺0,00"
+            android:textSize="18sp"
+            android:textColor="@android:color/black"
+            android:gravity="start"
+            android:textStyle="bold" />
+
+        <!-- Siparişi tamamla butonu -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/checkoutButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:iconSize="30dp"
+            android:text="Siparişi Tamamla"
+            android:textColor="@android:color/white"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:backgroundTint="#4CAF50"
+            app:cornerRadius="24dp"
+            app:icon="@drawable/baseline_shopping_cart_checkout_24"
+            app:iconGravity="textStart"
+            app:iconTint="@android:color/white"/>
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
