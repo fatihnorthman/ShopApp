@@ -11,6 +11,6 @@ interface ProductAPI {
 
 
 	@GET("atilsamancioglu/BTK23-DataSet/main/products.json")
-	suspend fun getData(): Response<List<Product>> {
-	}
+	suspend fun getData(): Response<List<Product>>
+
 }

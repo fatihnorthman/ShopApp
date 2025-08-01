@@ -7,11 +7,18 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.ncorp.shopapp.R
 import com.ncorp.shopapp.services.ProductAPI
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import okhttp3.Dispatcher
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 
 class ProductsFragment : Fragment() {
+	private var job: Job?=null
 
 
 	override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,7 +45,18 @@ class ProductsFragment : Fragment() {
 			.addConverterFactory(GsonConverterFactory.create())
 			.build()
 			.create(ProductAPI::class.java)
-		li
+		job= CoroutineScope(Dispatchers.IO).launch {
+			val response=retrofit.getData()
+			withContext(Dispatchers.Main){
+				if (response.isSuccessful){
+					response.body()?.let {
+						for (product in it){
+							println(product.name)
+						}
+					}
+				}
+			}
+		}
 	}
 
 }
