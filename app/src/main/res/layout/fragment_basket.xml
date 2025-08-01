@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:background="#D6D6D6"
     android:layout_height="match_parent"
-    tools:context=".BasketFragment">
+    tools:context=".view.BasketFragment">
 
     <!-- Sepetteki ürünleri gösterecek RecyclerView -->
     <androidx.recyclerview.widget.RecyclerView
@@ -14,6 +14,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:padding="8dp"
+        android:layout_marginBottom="5dp"
         tools:listitem="@layout/item_basket_row"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@+id/bottomSummaryLayout"

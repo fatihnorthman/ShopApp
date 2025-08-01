@@ -1,5 +1,5 @@
 // Paket bildirimi: Bu dosyanın ait olduğu paketi belirtir.
-package com.ncorp.shopapp
+package com.ncorp.shopapp.view
 
 // Gerekli importlar: Kullanılan sınıfların ve fonksiyonların dahil edilmesi.
 import android.os.Bundle
@@ -10,6 +10,7 @@ import androidx.core.view.WindowInsetsCompat // Pencere iç boşlukları için u
 import androidx.navigation.fragment.NavHostFragment // Navigasyon için fragment barındırıcısı.
 import androidx.navigation.ui.setupWithNavController // Navigasyon kontrolcüsünü UI bileşenleriyle ayarlamak için.
 import com.google.android.material.bottomnavigation.BottomNavigationView // Alt navigasyon çubuğu bileşeni.
+import com.ncorp.shopapp.R
 
 // MainActivity sınıfı, uygulamanın ana aktivitesini temsil eder.
 class MainActivity : AppCompatActivity() {
