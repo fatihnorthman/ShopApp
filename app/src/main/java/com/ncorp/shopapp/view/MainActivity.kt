@@ -5,6 +5,7 @@ package com.ncorp.shopapp.view
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge // Kenardan kenara görünümü etkinleştirmek için.
 import androidx.appcompat.app.AppCompatActivity // Temel aktivite sınıfı.
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.view.ViewCompat // View uyumluluk yardımcıları.
 import androidx.core.view.WindowInsetsCompat // Pencere iç boşlukları için uyumluluk.
 import androidx.navigation.fragment.NavHostFragment // Navigasyon için fragment barındırıcısı.
@@ -17,6 +18,7 @@ class MainActivity : AppCompatActivity() {
 	// onCreate metodu, aktivite oluşturulduğunda çağrılır.
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState) // Üst sınıfın onCreate metodunu çağırır.
+		AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
 		enableEdgeToEdge() // Kenardan kenara görünümü etkinleştirir.
 		setContentView(R.layout.activity_main) // Aktivitenin layout'unu ayarlar.
 

@@ -5,21 +5,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.ncorp.shopapp.R
-import com.ncorp.shopapp.services.ProductAPI
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import okhttp3.Dispatcher
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.GridLayoutManager
+import com.ncorp.shopapp.databinding.FragmentProductsBinding
+import com.ncorp.shopapp.model.Product
+import com.ncorp.shopapp.viewmodel.ProductViewModel
 
 
-class ProductsFragment : Fragment() {
-	private var job: Job?=null
-
+class ProductsFragment : Fragment(), ProductRecyclerAdapter.Listener {
+	private var _binding: FragmentProductsBinding? = null
+	private val binding get() = _binding!!
+	private val productViewModel: ProductViewModel by activityViewModels()
+	private var productRecyclerAdapter: ProductRecyclerAdapter? = null
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
@@ -31,32 +29,35 @@ class ProductsFragment : Fragment() {
 		savedInstanceState: Bundle?
 	): View? {
 		// Inflate the layout for this fragment
-		return inflater.inflate(R.layout.fragment_products, container, false)
+		_binding = FragmentProductsBinding.inflate(inflater, container, false)
+		val view = binding.root
+		return view
 	}
 
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
-		downloadData()
+		binding.recyclerView.layoutManager = GridLayoutManager(requireContext(), 2)
+		productViewModel.downloadData()
+		productViewModel.productList.observe(viewLifecycleOwner, Observer {
+			productRecyclerAdapter = ProductRecyclerAdapter(it, this)
+			binding.recyclerView.adapter = productRecyclerAdapter
+
+
+		})
+
+
 	}
 
-	private fun downloadData() {
-		val retrofit = Retrofit.Builder()
-			.baseUrl("https://raw.githubusercontent.com/")
-			.addConverterFactory(GsonConverterFactory.create())
-			.build()
-			.create(ProductAPI::class.java)
-		job= CoroutineScope(Dispatchers.IO).launch {
-			val response=retrofit.getData()
-			withContext(Dispatchers.Main){
-				if (response.isSuccessful){
-					response.body()?.let {
-						for (product in it){
-							println(product.name)
-						}
-					}
-				}
-			}
-		}
+	override fun onItemClick(product: Product) {
+		productViewModel.addtoBasket(product)
+
+	}
+
+	override fun onDestroyView() {
+		super.onDestroyView()
+		_binding = null
 	}
 
 }
+
+

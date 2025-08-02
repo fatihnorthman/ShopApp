@@ -5,7 +5,8 @@
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
     app:cardCornerRadius="12dp"
-    app:cardElevation="6dp">
+    app:cardElevation="6dp"
+    android:id="@+id/itemBasketRecyclerRow">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -57,8 +58,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Adet: 2"
-            android:textColor="@android:color/darker_gray"
-            android:textSize="14sp"
+            android:textColor="#787878"
+            android:textSize="16sp"
             app:layout_constraintStart_toStartOf="@id/textViewBasketProductName"
             app:layout_constraintTop_toBottomOf="@id/textViewBasketPrice" />
 
