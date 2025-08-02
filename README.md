@@ -46,4 +46,4 @@ Bu proje halen geliştirilme aşamasındadır. Yeni özellikler eklenmekte ve me
 
 ## İletişim
 
-Her türlü soru ve önerileriniz için lütfen [email@example.com] adresinden iletişime geçin.
+Her türlü soru ve önerileriniz için lütfen [alkan2798@gmail.com] adresinden iletişime geçin.
