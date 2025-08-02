@@ -12,52 +12,46 @@ import com.ncorp.shopapp.databinding.FragmentProductsBinding
 import com.ncorp.shopapp.model.Product
 import com.ncorp.shopapp.viewmodel.ProductViewModel
 
-
+// Ürün listesini gösteren fragment
 class ProductsFragment : Fragment(), ProductRecyclerAdapter.Listener {
+
 	private var _binding: FragmentProductsBinding? = null
 	private val binding get() = _binding!!
+
 	private val productViewModel: ProductViewModel by activityViewModels()
 	private var productRecyclerAdapter: ProductRecyclerAdapter? = null
-
-	override fun onCreate(savedInstanceState: Bundle?) {
-		super.onCreate(savedInstanceState)
-
-	}
 
 	override fun onCreateView(
 		inflater: LayoutInflater, container: ViewGroup?,
 		savedInstanceState: Bundle?
-	): View? {
-		// Inflate the layout for this fragment
+	): View {
 		_binding = FragmentProductsBinding.inflate(inflater, container, false)
-		val view = binding.root
-		return view
+		return binding.root
 	}
 
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
+
+		// RecyclerView 2 sütunlu grid olarak ayarlanır
 		binding.recyclerView.layoutManager = GridLayoutManager(requireContext(), 2)
+
+		// API’den veri çek
 		productViewModel.downloadData()
+
+		// Ürün listesi değiştiğinde adapter oluşturulur ve RecyclerView’a atanır
 		productViewModel.productList.observe(viewLifecycleOwner, Observer {
 			productRecyclerAdapter = ProductRecyclerAdapter(it, this)
 			binding.recyclerView.adapter = productRecyclerAdapter
-
-
 		})
-
-
 	}
 
+	// Ürün seçilince basket’e ekleme işlemi
 	override fun onItemClick(product: Product) {
 		productViewModel.addtoBasket(product)
-
 	}
 
 	override fun onDestroyView() {
 		super.onDestroyView()
 		_binding = null
 	}
-
 }
-
-

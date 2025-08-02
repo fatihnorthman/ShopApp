@@ -6,67 +6,61 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ncorp.shopapp.databinding.FragmentBasketBinding
 import com.ncorp.shopapp.model.Product
 import com.ncorp.shopapp.viewmodel.ProductViewModel
 
-
+// Sepet ekranı Fragment’ı
 class BasketFragment : Fragment() {
 	private var _binding: FragmentBasketBinding? = null
 	private val binding get() = _binding!!
 
-	private val ProductViewModel: ProductViewModel by activityViewModels()
-	private var basketAdapter: BasketRecyclerAdapter? = null
+	// ViewModel'i Activity scope’unda paylaşıyoruz
+	private val productViewModel: ProductViewModel by activityViewModels()
 
-
-	override fun onCreate(savedInstanceState: Bundle?) {
-		super.onCreate(savedInstanceState)
-
-	}
+	// Adapter late init, onViewCreated’de initialize edilecek
+	private lateinit var basketAdapter: BasketRecyclerAdapter
 
 	override fun onCreateView(
 		inflater: LayoutInflater, container: ViewGroup?,
 		savedInstanceState: Bundle?
-	): View? {
+	): View {
 		_binding = FragmentBasketBinding.inflate(inflater, container, false)
-		val view = binding.root
-		return view
-
-
+		return binding.root
 	}
 
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
-		binding.basketRecyclerView.layoutManager = LinearLayoutManager(requireContext())
-		ProductViewModel.basket.observe(viewLifecycleOwner) {
-			basketAdapter = BasketRecyclerAdapter(it as ArrayList<Product>) { product, action ->
-				when (action) {
-					BasketRecyclerAdapter.ActionType.DELETE -> ProductViewModel.deleteProductFromBasket(
-						product
-					)
 
-					BasketRecyclerAdapter.ActionType.DECREASE -> ProductViewModel.decreaseProductCount(
-						product
-					)
-				}
-				binding.basketRecyclerView.adapter = basketAdapter
+		// Başlangıçta boş listeyle adapter oluşturulur,
+		// Sepetteki ürünlerin azalma işlemi tetiklendiğinde callback devreye girer
+		basketAdapter = BasketRecyclerAdapter(arrayListOf()) { product, action ->
+			when (action) {
+				BasketRecyclerAdapter.ActionType.DECREASE ->
+					productViewModel.decreaseProductCount(product) // Azaltma fonksiyonu çağrılır
 			}
-			ProductViewModel.totalBasket.observe(viewLifecycleOwner, Observer {
-				binding.totalPriceText.text = "Toplam: ₺ ${it.toString()}"
-			})
-
-
 		}
 
+		// RecyclerView için LinearLayoutManager atanır
+		binding.basketRecyclerView.layoutManager = LinearLayoutManager(requireContext())
+		binding.basketRecyclerView.adapter = basketAdapter
+
+		// Sepet listesindeki değişiklikleri gözle, adapter verisini güncelle
+		productViewModel.basket.observe(viewLifecycleOwner) { basketList ->
+			basketAdapter.basketList.clear()              // Eski listeyi temizle
+			basketAdapter.basketList.addAll(basketList)   // Yeni veriyi ekle
+			basketAdapter.notifyDataSetChanged()          // Liste değişti diye bildir
+		}
+
+		// Toplam tutarı gözle ve TextView'a yaz
+		productViewModel.totalBasket.observe(viewLifecycleOwner) { total ->
+			binding.totalPriceText.text = "Toplam: ₺ $total"
+		}
 	}
 
 	override fun onDestroyView() {
 		super.onDestroyView()
-		_binding = null
-
-
+		_binding = null // Bellek sızıntısı olmaması için binding null yapılır
 	}
-
 }
