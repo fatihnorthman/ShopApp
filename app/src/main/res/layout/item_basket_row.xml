@@ -27,34 +27,39 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent" />
 
-        <!-- Ürün adı -->
-        <TextView
-            android:id="@+id/textViewBasketProductName"
+        <!-- Ürün adı ve fiyatı yatay hizalı -->
+        <LinearLayout
+            android:id="@+id/rowNamePrice"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:layout_marginEnd="8dp"
-            android:text="Ürün Adı"
-            android:textColor="@color/text_primary"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:maxLines="2"
-            android:ellipsize="end"
+            android:orientation="horizontal"
             app:layout_constraintStart_toEndOf="@id/imageViewBasketProduct"
+            app:layout_constraintEnd_toStartOf="@id/buttonRemoveItem"
             app:layout_constraintTop_toTopOf="@id/imageViewBasketProduct"
-            app:layout_constraintEnd_toStartOf="@id/buttonRemoveItem" />
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="8dp">
 
-        <!-- Ürün fiyatı -->
-        <TextView
-            android:id="@+id/textViewBasketPrice"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="₺149.99"
-            android:textColor="@color/primary"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="@id/textViewBasketProductName"
-            app:layout_constraintTop_toBottomOf="@id/textViewBasketProductName" />
+            <TextView
+                android:id="@+id/textViewBasketProductName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Ürün Adı"
+                android:textColor="@color/text_primary"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:maxLines="2"
+                android:ellipsize="end" />
+
+            <TextView
+                android:id="@+id/textViewBasketPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/accent"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:layout_gravity="center_vertical" />
+        </LinearLayout>
 
         <!-- Adet bilgisi -->
         <TextView
@@ -64,8 +69,8 @@
             android:text="Adet: 2"
             android:textColor="@color/text_secondary"
             android:textSize="14sp"
-            app:layout_constraintStart_toStartOf="@id/textViewBasketProductName"
-            app:layout_constraintTop_toBottomOf="@id/textViewBasketPrice" />
+            app:layout_constraintStart_toStartOf="@id/rowNamePrice"
+            app:layout_constraintTop_toBottomOf="@id/rowNamePrice" />
 
         <!-- Ürünü sepetten silme butonu -->
         <com.google.android.material.button.MaterialButton

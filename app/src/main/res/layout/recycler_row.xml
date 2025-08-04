@@ -50,35 +50,47 @@
             android:id="@+id/textViewProductPrice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="₺149.99"
-            android:textColor="@color/primary"
-            android:textSize="18sp"
+            android:textColor="@color/accent"
             android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
+            android:textSize="16sp"
+            app:layout_constraintTop_toBottomOf="@id/textViewProductName"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/textViewProductName" />
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="4dp"
+            app:layout_constraintBottom_toTopOf="@id/buttonAddToCart"
+            android:layout_marginBottom="8dp"/>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/buttonAddToCart"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:paddingVertical="8dp"
             android:text="Sepete Ekle"
-            android:textColor="@color/on_primary"
-            android:textSize="14sp"
+            android:textColor="@color/white"
             android:textStyle="bold"
-            app:backgroundTint="@color/primary"
-            app:cornerRadius="20dp"
-            app:icon="@drawable/baseline_shopping_basket_24"
+            android:textSize="16sp"
+            app:backgroundTint="@android:color/transparent"
+            android:background="@drawable/button_add_to_cart_bg"
+            app:cornerRadius="32dp"
+            app:icon="@drawable/baseline_shopping_cart_checkout_24"
+            app:iconTint="@color/white"
             app:iconGravity="textStart"
-            app:iconSize="18dp"
-            app:iconTint="@color/on_primary"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:iconPadding="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/textViewProductPrice" />
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginBottom="8dp"/>
+
+        <ImageButton
+            android:id="@+id/buttonFavorite"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:background="@drawable/favorite_button_bg"
+            android:src="@drawable/ic_favorite_border"
+            android:contentDescription="Favorilere ekle"
+            android:elevation="6dp"
+            app:layout_constraintEnd_toEndOf="@id/imageViewProduct"
+            app:layout_constraintTop_toTopOf="@id/imageViewProduct"
+            android:layout_margin="8dp"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </com.google.android.material.card.MaterialCardView>

@@ -1,11 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/productsFragment"
-        android:icon="@drawable/baseline_menu_24"
-        android:title="Ürünler"
-        />
-    <item android:id="@+id/basketFragment"
-        android:icon="@drawable/baseline_shopping_basket_24"
-        android:title="Sepet"/>
+        android:id="@+id/storeFragment"
+        android:icon="@drawable/ic_store_modern"
+        android:title="Mağaza" />
+    <item 
+        android:id="@+id/categoriesFragment"
+        android:icon="@drawable/ic_products_modern"
+        android:title="Kategoriler" />
+    <item 
+        android:id="@+id/basketFragment"
+        android:icon="@drawable/ic_cart_modern"
+        android:title="Sepet" />
+    <item 
+        android:id="@+id/profileFragment"
+        android:icon="@drawable/ic_profile_modern"
+        android:title="Profil" />
 </menu>

@@ -14,6 +14,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import com.ncorp.shopapp.model.Order
 
 // ViewModel sınıfı: UI'dan bağımsız, veri ve iş mantığını tutar.
 // Bu sınıf ürün listesini indirir, sepete ekler, çıkarır ve toplam tutarı hesaplar.
@@ -29,6 +30,13 @@ class ProductViewModel : ViewModel() {
 
 	// Canlı veri: sepetin toplam tutarı
 	val totalBasket = MutableLiveData<Int>()
+
+	// Favori ürünlerin listesi
+	private val favoriteIds = mutableSetOf<String>()
+	val favoriteProducts = MutableLiveData<List<Product>>()
+
+	// Siparişlerin listesi
+	val orders = MutableLiveData<List<Order>>(emptyList())
 
 	// Ürün listesini internetten indirip 'productList' LiveData'sına koyar.
 	fun downloadData() {
@@ -46,8 +54,11 @@ class ProductViewModel : ViewModel() {
 				// Eğer istek başarılıysa,
 				if (response.isSuccessful) {
 					// Gelen ürün listesi LiveData'ya atanır,
-					response.body()?.let {
-						productList.value = it
+					response.body()?.let { list ->
+						// Favori id'leri koruyarak isFavorite alanını set et
+						val updated = list.map { it.copy(isFavorite = favoriteIds.contains(it.id)) }
+						productList.value = updated
+						favoriteProducts.value = updated.filter { it.isFavorite }
 					}
 				}
 			}
@@ -56,29 +67,16 @@ class ProductViewModel : ViewModel() {
 
 	// Sepete ürün ekleme fonksiyonu.
 	fun addtoBasket(product: Product) {
-		if (basket.value != null) {
-			// Eğer sepet doluysa, listeyi arrayListe çeviriyoruz.
-			val arrayList = basket.value as ArrayList<Product>
-			// Ürün zaten sepetteyse adetini artırıyoruz.
-			if (arrayList.contains(product)) {
-				val indexOfFirst = arrayList.indexOfFirst { it == product }
-				val relatedProduct = arrayList.get(indexOfFirst)
-				relatedProduct.count += 1
-				basket.value = arrayList
-			} else {
-				// Ürün sepette yoksa adetini 1 yap ve listeye ekle.
-				product.count += 1
-				arrayList.add(product)
-				basket.value = arrayList
-			}
+		val currentList = basket.value?.toMutableList() ?: mutableListOf()
+		val index = currentList.indexOfFirst { it.id == product.id }
+		if (index != -1) {
+			val existing = currentList[index]
+			currentList[index] = existing.copy(count = existing.count + 1)
 		} else {
-			// Sepet boşsa yeni bir liste oluştur ve ürünü ekle.
-			val arrayList = ArrayList<Product>()
-			product.count += 1
-			basket.value = arrayList
+			currentList.add(product.copy(count = 1))
 		}
-		// Sepet güncellendikten sonra toplam fiyat hesaplanır.
-		refreshTotalValue(basket.value!!)
+		basket.value = currentList
+		refreshTotalValue(currentList)
 	}
 
 	// Sepetteki ürünlerin toplam fiyatını hesaplayan özel fonksiyon.
@@ -127,6 +125,38 @@ class ProductViewModel : ViewModel() {
 			basket.value = current
 			refreshTotalValue(current)
 		}
+	}
+
+	// Favori ürünleri güncelleyen fonksiyon.
+	fun toggleFavorite(product: Product) {
+		if (favoriteIds.contains(product.id)) {
+			favoriteIds.remove(product.id)
+		} else {
+			favoriteIds.add(product.id)
+		}
+		updateFavoritesInProductList()
+	}
+
+	// Siparişi tamamla fonksiyonu.
+	fun completeOrder() {
+		val basketList = basket.value ?: emptyList()
+		if (basketList.isNotEmpty()) {
+			val total = totalBasket.value ?: 0
+			val newOrder = Order(basketList.map { it.copy() }, total)
+			val updatedOrders = orders.value?.toMutableList() ?: mutableListOf()
+			updatedOrders.add(0, newOrder)
+			orders.value = updatedOrders
+			basket.value = emptyList()
+			totalBasket.value = 0
+		}
+	}
+
+	private fun updateFavoritesInProductList() {
+		val updatedList = productList.value?.map {
+			it.copy(isFavorite = favoriteIds.contains(it.id))
+		} ?: emptyList()
+		productList.value = updatedList
+		favoriteProducts.value = updatedList.filter { it.isFavorite }
 	}
 
 	// ViewModel temizlenirken aktif coroutine işi iptal edilir.

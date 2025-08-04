@@ -44,6 +44,7 @@ class BasketFragment : Fragment() {
 
 		// RecyclerView için LinearLayoutManager atanır
 		binding.basketRecyclerView.layoutManager = LinearLayoutManager(requireContext())
+		binding.basketRecyclerView.setHasFixedSize(true)
 		binding.basketRecyclerView.adapter = basketAdapter
 
 		// Sepet listesindeki değişiklikleri gözle, adapter verisini güncelle
@@ -56,6 +57,11 @@ class BasketFragment : Fragment() {
 		// Toplam tutarı gözle ve TextView'a yaz
 		productViewModel.totalBasket.observe(viewLifecycleOwner) { total ->
 			binding.totalPriceText.text = "Toplam: ₺ $total"
+		}
+
+		binding.checkoutButton.setOnClickListener {
+			productViewModel.completeOrder()
+			android.widget.Toast.makeText(requireContext(), "Siparişiniz başarıyla oluşturuldu!", android.widget.Toast.LENGTH_LONG).show()
 		}
 	}
 

@@ -6,9 +6,8 @@ package com.ncorp.shopapp.model
 data class Product(
 	val id: String,       // Ürünün benzersiz ID'si
 	val name: String,     // Ürün ismi
-	val price: String,    // Ürün fiyatı (string olarak tutuluyor, dikkat!)
-	val url: String       // Ürün resmi URL'si
-) {
-	// Sepette bu ürünün adedini tutan değişken.
-	var count: Int = 0   // Varsayılan 0, sepete eklendikçe artar
-}
+	val price: String,    // Ürün fiyatı (string olarak tutuluyor)
+	val url: String,      // Ürün resmi URL'si
+	var count: Int = 0,    // Sepetteki adedi (varsayılan 0)
+	var isFavorite: Boolean = false
+)

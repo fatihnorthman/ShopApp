@@ -64,16 +64,17 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:layout_marginStart="16dp"
-                app:iconSize="20dp"
+                app:iconSize="24dp"
                 android:text="Siparişi Tamamla"
-                android:textColor="@color/on_primary"
-                android:textSize="14sp"
+                android:textColor="@color/white"
                 android:textStyle="bold"
-                app:backgroundTint="@color/primary"
-                app:cornerRadius="20dp"
-                app:icon="@drawable/baseline_shopping_cart_checkout_24"
+                android:textSize="18sp"
+                app:backgroundTint="@android:color/transparent"
+                android:background="@drawable/button_checkout_bg"
+                app:cornerRadius="32dp"
+                app:icon="@android:drawable/ic_menu_send"
                 app:iconGravity="textStart"
-                app:iconTint="@color/on_primary"/>
+                app:iconTint="@color/white"/>
 
         </LinearLayout>
 
