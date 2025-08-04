@@ -1,25 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
     app:cardCornerRadius="12dp"
-    app:cardElevation="6dp"
+    app:cardElevation="2dp"
+    app:strokeColor="@color/divider"
+    app:strokeWidth="1dp"
     android:id="@+id/itemBasketRecyclerRow">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="12dp">
+        android:padding="16dp">
 
         <!-- Ürün görseli -->
         <ImageView
             android:id="@+id/imageViewBasketProduct"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
             android:scaleType="centerCrop"
-            android:src="@android:drawable/ic_menu_report_image"
+            android:src="@drawable/product_placeholder"
+            android:background="@color/surface_variant"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent" />
@@ -30,9 +33,10 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
+            android:layout_marginEnd="8dp"
             android:text="Ürün Adı"
-            android:textColor="@android:color/black"
-            android:textSize="20sp"
+            android:textColor="@color/text_primary"
+            android:textSize="16sp"
             android:textStyle="bold"
             android:maxLines="2"
             android:ellipsize="end"
@@ -46,8 +50,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="₺149.99"
-            android:textColor="#2196F3"
-            android:textSize="24sp"
+            android:textColor="@color/primary"
+            android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="@id/textViewBasketProductName"
             app:layout_constraintTop_toBottomOf="@id/textViewBasketProductName" />
@@ -58,22 +62,27 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Adet: 2"
-            android:textColor="#787878"
-            android:textSize="16sp"
+            android:textColor="@color/text_secondary"
+            android:textSize="14sp"
             app:layout_constraintStart_toStartOf="@id/textViewBasketProductName"
             app:layout_constraintTop_toBottomOf="@id/textViewBasketPrice" />
 
         <!-- Ürünü sepetten silme butonu -->
-        <ImageButton
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/buttonRemoveItem"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="Ürünü sil"
             android:src="@drawable/baseline_delete_24"
+            app:icon="@drawable/baseline_delete_24"
+            app:iconSize="20dp"
+            app:iconTint="@color/error"
+            app:backgroundTint="@color/surface_variant"
+            app:cornerRadius="20dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:tint="@android:color/holo_red_dark" />
+            app:layout_constraintBottom_toBottomOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-</androidx.cardview.widget.CardView>
+</com.google.android.material.card.MaterialCardView>
