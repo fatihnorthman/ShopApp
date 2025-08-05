@@ -90,10 +90,23 @@
     </fragment>
 
     <fragment
+        android:id="@+id/ordersFragment"
+        android:name="com.ncorp.shopapp.view.OrdersFragment"
+        android:label="Geçmiş Siparişler"
+        tools:layout="@layout/fragment_orders" />
+
+    <fragment
         android:id="@+id/profileFragment"
         android:name="com.ncorp.shopapp.view.ProfileFragment"
         android:label="Profil"
         tools:layout="@layout/fragment_profile">
+        <action
+            android:id="@+id/action_profile_to_orders"
+            app:destination="@id/ordersFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
         <action
             android:id="@+id/action_profile_to_store"
             app:destination="@id/storeFragment"

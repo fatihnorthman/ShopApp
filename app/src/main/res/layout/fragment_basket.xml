@@ -69,7 +69,6 @@
                 android:textColor="@color/white"
                 android:textStyle="bold"
                 android:textSize="18sp"
-                app:backgroundTint="@android:color/transparent"
                 android:background="@drawable/button_checkout_bg"
                 app:cornerRadius="32dp"
                 app:icon="@android:drawable/ic_menu_send"

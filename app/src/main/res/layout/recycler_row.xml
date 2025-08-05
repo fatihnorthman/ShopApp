@@ -68,7 +68,6 @@
             android:textColor="@color/white"
             android:textStyle="bold"
             android:textSize="16sp"
-            app:backgroundTint="@android:color/transparent"
             android:background="@drawable/button_add_to_cart_bg"
             app:cornerRadius="32dp"
             app:icon="@drawable/baseline_shopping_cart_checkout_24"
